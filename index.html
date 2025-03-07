@@ -16,10 +16,8 @@
         <!-- Messages List -->
         <div class="card mb-4">
             <div class="card-body">
-                <ul class="list-group list-group-flush">
-                    {% for message in messages %}
-                    <li class="list-group-item">{{ message }}</li>
-                    {% endfor %}
+                <ul class="list-group list-group-flush" id="message-list">
+                    <!-- Messages will be added dynamically with JavaScript -->
                 </ul>
             </div>
         </div>
