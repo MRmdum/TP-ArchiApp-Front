@@ -1,73 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Messagerie Simple</title>
-    <style>
-        /* Dark theme styles */
-        body {
-            background-color: #212529;
-            color: #f8f9fa;
-            font-family: sans-serif;
-            margin: 0;
-            padding: 20px;
-        }
-        header {
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        .card {
-            background-color: #343a40;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            overflow: hidden;
-        }
-        .card-body {
-            padding: 15px;
-        }
-        .list-group {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        .list-group-item {
-            background-color: #495057;
-            border-bottom: 1px solid #6c757d;
-            padding: 10px;
-            margin-bottom: 5px;
-            border-radius: 3px;
-        }
-        .mb-3, .mb-4 {
-            margin-bottom: 1rem;
-        }
-        .form-label {
-            display: block;
-            margin-bottom: 5px;
-        }
-        .form-control {
-            width: 100%;
-            background-color: #495057;
-            color: #f8f9fa;
-            border: 1px solid #6c757d;
-            border-radius: 3px;
-            padding: 10px;
-            margin-bottom: 10px;
-            box-sizing: border-box;
-        }
-        .btn {
-            background-color: #6c757d;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 3px;
-            cursor: pointer;
-        }
-        .btn:hover {
-            background-color: #5a6268;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div>
@@ -99,19 +36,6 @@
             </div>
         </div>
     </div>
-    <script>
-        // Basic functionality for the send button
-        document.querySelector('.btn').addEventListener('click', function() {
-            const messageText = document.getElementById('messageText').value;
-            if (messageText.trim() !== '') {
-                const listGroup = document.querySelector('.list-group');
-                const newMessage = document.createElement('li');
-                newMessage.className = 'list-group-item';
-                newMessage.textContent = messageText;
-                listGroup.appendChild(newMessage);
-                document.getElementById('messageText').value = '';
-            }
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
