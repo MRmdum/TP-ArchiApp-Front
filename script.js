@@ -22,12 +22,44 @@ console.log("Factorials of [1,2,3,4,5,6]:", applique(fact, [1, 2, 3, 4, 5, 6]));
 // Testing applique with an anonymous function
 console.log("Increment each element:", applique(function(n) { return (n + 1); }, [1, 2, 3, 4, 5, 6]));
 
-// Message array with structure
-let msgs = [
-  { "msg": "Hello World", "pseudo": "User1", "date": new Date().toLocaleString() },
-  { "msg": "Blah Blah", "pseudo": "User2", "date": new Date().toLocaleString() },
-  { "msg": "I love cats", "pseudo": "User3", "date": new Date().toLocaleString() }
-];
+// API URL
+const API_URL = '/api/messages';
+
+// Function to fetch messages from API
+async function fetchMessages() {
+  try {
+    const response = await fetch(API_URL);
+    if (!response.ok) {
+      throw new Error(`Erreur HTTP: ${response.status}`);
+    }
+    const messages = await response.json();
+    update(messages);
+  } catch (error) {
+    console.error('Erreur lors de la récupération des messages:', error);
+  }
+}
+
+// Function to send a new message
+async function sendMessage(message, pseudo) {
+  try {
+    const response = await fetch(API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ msg: message, pseudo })
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Erreur HTTP: ${response.status}`);
+    }
+    
+    // Rafraîchir les messages après l'envoi
+    fetchMessages();
+  } catch (error) {
+    console.error('Erreur lors de l\'envoi du message:', error);
+  }
+}
 
 // Function to update the message list
 function update(messages) {
@@ -72,12 +104,15 @@ document.addEventListener('DOMContentLoaded', function() {
   pseudoInput.style.marginBottom = '10px';
   document.querySelector('.mb-3').insertBefore(pseudoInput, document.getElementById('messageText'));
 
-  // Initial update
-  update(msgs);
+  // Initial fetch of messages
+  fetchMessages();
+
+  // Set interval to refresh messages every 5 seconds
+  setInterval(fetchMessages, 5000);
 
   // Update button event listener
   updateButton.addEventListener('click', function() {
-    update(msgs);
+    fetchMessages();
   });
 
   // Theme toggle functionality
@@ -120,15 +155,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const pseudo = document.getElementById('pseudoInput').value || 'Anonymous';
 
     if (messageText.trim() !== '') {
-      // Add the new message to msgs array
-      msgs.push({
-        "msg": messageText,
-        "pseudo": pseudo,
-        "date": new Date().toLocaleString()
-      });
-
-      // Update the message list
-      update(msgs);
+      // Send the message to the API
+      sendMessage(messageText, pseudo);
 
       // Clear the input field
       document.getElementById('messageText').value = '';
