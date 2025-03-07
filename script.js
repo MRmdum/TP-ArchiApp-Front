@@ -17,10 +17,10 @@ function applique(f, tab) {
 }
 
 // Testing applique with fact
-console.log("Factorials of [1,2,3,4,5,6]:", applique(fact, [1,2,3,4,5,6]));
+console.log("Factorials of [1,2,3,4,5,6]:", applique(fact, [1, 2, 3, 4, 5, 6]));
 
 // Testing applique with an anonymous function
-console.log("Increment each element:", applique(function(n) { return (n+1); }, [1,2,3,4,5,6]));
+console.log("Increment each element:", applique(function(n) { return (n + 1); }, [1, 2, 3, 4, 5, 6]));
 
 // Message array with structure
 let msgs = [
@@ -32,10 +32,10 @@ let msgs = [
 // Function to update the message list
 function update(messages) {
   const messageList = document.getElementById('message-list');
-  
+
   // Clear existing messages
   messageList.innerHTML = '';
-  
+
   // Add each message to the list
   messages.forEach(messageObj => {
     const newMessage = document.createElement('li');
@@ -48,21 +48,21 @@ function update(messages) {
 // Basic functionality for the send button
 document.addEventListener('DOMContentLoaded', function() {
   const messageList = document.getElementById('message-list');
-  
+
   // Add an update button
   const updateButton = document.createElement('button');
   updateButton.textContent = 'Mettre à jour';
   updateButton.className = 'btn update-btn';
   updateButton.style.marginRight = '10px';
   document.querySelector('.card-body').appendChild(updateButton);
-  
+
   // Add a toggle theme button
   const themeToggle = document.createElement('button');
   themeToggle.textContent = 'Changer de thème';
   themeToggle.className = 'btn theme-btn';
   themeToggle.style.marginLeft = '10px';
   document.querySelector('.card-body').appendChild(themeToggle);
-  
+
   // Add a pseudo input
   const pseudoInput = document.createElement('input');
   pseudoInput.type = 'text';
@@ -71,21 +71,15 @@ document.addEventListener('DOMContentLoaded', function() {
   pseudoInput.placeholder = 'Votre pseudo';
   pseudoInput.style.marginBottom = '10px';
   document.querySelector('.mb-3').insertBefore(pseudoInput, document.getElementById('messageText'));
-  
-  const pseudoLabel = document.createElement('label');
-  pseudoLabel.htmlFor = 'pseudoInput';
-  pseudoLabel.className = 'form-label';
-  pseudoLabel.textContent = 'Votre pseudo';
-  document.querySelector('.mb-3').insertBefore(pseudoLabel, pseudoInput);
-  
+
   // Initial update
   update(msgs);
-  
+
   // Update button event listener
   updateButton.addEventListener('click', function() {
     update(msgs);
   });
-  
+
   // Theme toggle functionality
   themeToggle.addEventListener('click', function() {
     const body = document.body;
@@ -119,12 +113,12 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
   });
-  
+
   // Send button event listener
   document.querySelector('.btn').addEventListener('click', function() {
     const messageText = document.getElementById('messageText').value;
     const pseudo = document.getElementById('pseudoInput').value || 'Anonymous';
-    
+
     if (messageText.trim() !== '') {
       // Add the new message to msgs array
       msgs.push({
@@ -132,10 +126,10 @@ document.addEventListener('DOMContentLoaded', function() {
         "pseudo": pseudo,
         "date": new Date().toLocaleString()
       });
-      
+
       // Update the message list
       update(msgs);
-      
+
       // Clear the input field
       document.getElementById('messageText').value = '';
     }
