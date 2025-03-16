@@ -1,4 +1,5 @@
 const url_api ="https://tp-archiapp-back.onrender.com";//= process.env.URL_API;
+console.log("Fetching messages from:", url_api + "/msg/getAll");
 
 let msgs = [];
 function fetchMessages() {
@@ -8,7 +9,7 @@ function fetchMessages() {
   return fetch(url_api+'/msg/getAll')
     .then(response => response.json())
     .then(data => {
-      console.log("Response status:", response.status);  // Debugging log
+      console.log("Received data:", data);  // Debugging log
 
       msgs = data.map(item => ({
         msg: item.text,
