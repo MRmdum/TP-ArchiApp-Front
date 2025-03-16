@@ -132,22 +132,28 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Send button event listener
   document.querySelector('.btn').addEventListener('click', function() {
-    const messageText = document.getElementById('messageText').value;
+    const text = document.getElementById('messageText').value;
     const pseudo = document.getElementById('pseudoInput').value || 'Anonymous';
 
-    if (messageText.trim() !== '') {
-      // Add the new message to msgs array
-      msgs.push({
-        "msg": messageText,
-        "pseudo": pseudo,
-        "date": new Date().toLocaleString()
-      });
-
-      // Update the message list
-      update(msgs);
-
-      // Clear the input field
-      document.getElementById('messageText').value = '';
+    if (text.trim() !== '') {
+      // Send message to API
+      fetch('https://ebbd671e-5e36-4e42-a6a8-3a73079d02ea-00-2dt89h0rs1mlf.worf.replit.dev/msg/post', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ text, pseudo })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.code === 1) {
+          // Clear the input field
+          document.getElementById('messageText').value = '';
+          // Refresh messages
+          fetchMessages().then(() => update(msgs));
+        }
+      })
+      .catch(error => console.error('Error:', error));
     }
   });
 });
