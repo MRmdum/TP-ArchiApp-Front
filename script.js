@@ -1,4 +1,4 @@
-const url_api ="https://tp-archiapp-front.onrender.com";//= process.env.URL_API;
+const url_api ="https://tp-archiapp-back.onrender.com";//= process.env.URL_API;
 
 let msgs = [];
 function fetchMessages() {
