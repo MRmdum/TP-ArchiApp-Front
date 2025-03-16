@@ -1,3 +1,17 @@
+let msgs = [];
+
+function fetchMessages() {
+  return fetch('https://ebbd671e-5e36-4e42-a6a8-3a73079d02ea-00-2dt89h0rs1mlf.worf.replit.dev/msg/getAll')
+    .then(response => response.json())
+    .then(data => {
+      msgs = data.map(item => ({
+        msg: item.text,
+        pseudo: item.pseudo,
+        date: new Date(item.date).toLocaleString()
+      }));
+    })
+    .catch(error => console.error("Erreur lors de la récupération des messages :", error));
+}
 
 // Factorial function
 function fact(n) {
@@ -22,12 +36,6 @@ console.log("Factorials of [1,2,3,4,5,6]:", applique(fact, [1, 2, 3, 4, 5, 6]));
 // Testing applique with an anonymous function
 console.log("Increment each element:", applique(function(n) { return (n + 1); }, [1, 2, 3, 4, 5, 6]));
 
-// Message array with structure
-let msgs = [
-  { "msg": "Hello World", "pseudo": "User1", "date": new Date().toLocaleString() },
-  { "msg": "Blah Blah", "pseudo": "User2", "date": new Date().toLocaleString() },
-  { "msg": "I love cats", "pseudo": "User3", "date": new Date().toLocaleString() }
-];
 
 // Function to update the message list
 function update(messages) {
@@ -73,10 +81,18 @@ document.addEventListener('DOMContentLoaded', function() {
   document.querySelector('.mb-3').insertBefore(pseudoInput, document.getElementById('messageText'));
 
   // Initial update
+  fetchMessages().then(() => {
+    if (msgs.length > 0) {
+      alert(msgs[0].msg);
+    } else {
+      alert("Aucun message reçu.");
+    }
+  });
   update(msgs);
 
   // Update button event listener
   updateButton.addEventListener('click', function() {
+    fetchMessages();
     update(msgs);
   });
 
