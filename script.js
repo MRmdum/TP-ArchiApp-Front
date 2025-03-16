@@ -1,7 +1,8 @@
-let msgs = [];
+const url_api = process.env.URL_API;
 
+let msgs = [];
 function fetchMessages() {
-  return fetch('https://ebbd671e-5e36-4e42-a6a8-3a73079d02ea-00-2dt89h0rs1mlf.worf.replit.dev/msg/getAll')
+  return fetch(url_api+'/msg/getAll')
     .then(response => response.json())
     .then(data => {
       msgs = data.map(item => ({
@@ -137,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (text.trim() !== '') {
       // Send message to API
-      fetch('https://ebbd671e-5e36-4e42-a6a8-3a73079d02ea-00-2dt89h0rs1mlf.worf.replit.dev/msg/post', {
+      fetch(url_api+'/msg/post', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
